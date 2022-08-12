@@ -19,14 +19,14 @@
   <property name="maximumSize">
    <size>
     <width>1200</width>
-    <height>800</height>
+    <height>880</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Beanfinder</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="beanfinderLabel">
     <property name="geometry">
      <rect>
       <x>60</x>
@@ -104,9 +104,48 @@
      <bool>false</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="deleteButton">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>750</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="exitButton">
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>750</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Exit</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="characterList">
+    <property name="geometry">
+     <rect>
+      <x>845</x>
+      <y>20</y>
+      <width>331</width>
+      <height>721</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>background</zorder>
-   <zorder>label</zorder>
+   <zorder>beanfinderLabel</zorder>
    <zorder>logo</zorder>
+   <zorder>deleteButton</zorder>
+   <zorder>exitButton</zorder>
+   <zorder>characterList</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -118,7 +157,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
