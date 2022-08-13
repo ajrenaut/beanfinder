@@ -140,12 +140,26 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="createCharacterButton">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>700</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create Character</string>
+    </property>
+   </widget>
    <zorder>background</zorder>
    <zorder>beanfinderLabel</zorder>
    <zorder>logo</zorder>
    <zorder>deleteButton</zorder>
    <zorder>exitButton</zorder>
    <zorder>characterList</zorder>
+   <zorder>createCharacterButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

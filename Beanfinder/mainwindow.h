@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QListWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -12,8 +13,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *aParent = nullptr);
     ~MainWindow();
+
+public slots:
+    void onCharacterListSelectionChanged(QListWidgetItem* current, QListWidgetItem* previous);
 
 private:
     Ui::MainWindow *ui;

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
+    <width>320</width>
     <height>90</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>300</width>
+    <width>320</width>
     <height>90</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>300</width>
+    <width>320</width>
     <height>90</height>
    </size>
   </property>
@@ -66,6 +66,19 @@
    </property>
    <property name="text">
     <string>Blood Elf Paladin</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonLogin">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>20</y>
+     <width>121</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Select Character</string>
    </property>
   </widget>
  </widget>

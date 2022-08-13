@@ -22,6 +22,9 @@ set(PROJECT_SOURCES
         Widgets/characterlistitem.ui
         Widgets/characterlistitem.h
         Widgets/characterlistitem.cpp
+        Widgets/charactercreatorform.h
+        Widgets/charactercreatorform.cpp
+        Widgets/charactercreatorform.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

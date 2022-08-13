@@ -16,18 +16,17 @@ public:
 
     QString getName();
     void setName(const QString& text);
+
     QString getRaceClass();
     void setRaceClass(const QString& text);
-    QSize sizeHint() const;
-    QSize minimumSizeHint() const;
 
-signals:
-     void sendRemoveItem(const QString& text);
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
 
-private slots:
-     void onToolButtonClicked();
+    void onFocusChanged( const bool aIsFocused );
 
 private:
+// Variables
     Ui::CharacterListItem *ui;
 
 };
