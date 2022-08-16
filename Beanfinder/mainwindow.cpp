@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap backgroundMap("D:/Programming Projects/Beanfinder/Application/Beanfinder/assets/background");
     QPixmap logoMap("D:/Programming Projects/Beanfinder/Application/Beanfinder/assets/logo");
 
+    // TODO: Update this to new connection syntax.
     connect(ui->characterList, SIGNAL(currentItemChanged(QListWidgetItem*, QListWidgetItem*)), this, SLOT(onCharacterListSelectionChanged(QListWidgetItem*, QListWidgetItem*)));
 
     const int backgroundWidth{ ui->background->width() };
@@ -57,10 +58,9 @@ MainWindow::MainWindow(QWidget *parent)
     characterCreatorWidget->move(320, 110);
     characterCreatorWidget->hide();
 
-    /*
-    this->findChild<CharacterCreatorForm*>("characterCreatorWidget")->show();
-    this->findChild<CharacterCreatorForm*>("characterCreatorWidget")->hide();
-    */
+    // Probably should connect this to the character creator widget instead of the main window.
+    connect(ui->createCharacterButton, &QPushButton::clicked,
+            characterCreatorWidget, &CharacterCreatorForm::onCreateCharacterClicked);
 }
 
 MainWindow::~MainWindow()
