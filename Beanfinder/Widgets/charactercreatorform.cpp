@@ -210,9 +210,27 @@ std::vector<CharacterCreatorForm::Class> CharacterCreatorForm::getAvailableClass
 void CharacterCreatorForm::onFactionClicked( Faction aFaction )
 {
     updateRaceList( aFaction );
+    if( aFaction == Faction::Alliance )
+    {
+        auto currentButton{ findChild<QPushButton*>(QString("hordeButton")) };
+        currentButton->setChecked( false );
+    }
+    else
+    {
+        auto currentButton{ findChild<QPushButton*>(QString("allianceButton")) };
+        currentButton->setChecked( false );
+    }
 }
 
 void CharacterCreatorForm::onRaceClicked( Race aRace )
 {
     updateClassList( aRace );
+    for(int i{ 0 }; i < RACE_COUNT; i++)
+    {
+        auto currentButton{ findChild<QPushButton*>(QString("race%1").arg(i)) };
+        if( currentButton->text() != raceMap.find( aRace )->second )
+        {
+            currentButton->setChecked( false );
+        }
+    }
 }
