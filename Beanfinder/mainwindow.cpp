@@ -61,6 +61,8 @@ MainWindow::MainWindow(QWidget *parent)
     // Probably should connect this to the character creator widget instead of the main window.
     connect(ui->createCharacterButton, &QPushButton::clicked,
             characterCreatorWidget, &CharacterCreatorForm::onCreateCharacterClicked);
+
+    connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::onExitButtonClicked);
 }
 
 MainWindow::~MainWindow()
@@ -79,4 +81,9 @@ void MainWindow::onCharacterListSelectionChanged(QListWidgetItem* current, QList
     {
         qobject_cast<CharacterListItem*>(ui->characterList->itemWidget(current))->onFocusChanged( true );
     }
+}
+
+void MainWindow::onExitButtonClicked()
+{
+    qApp->quit();
 }

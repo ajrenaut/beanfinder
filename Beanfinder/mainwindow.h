@@ -21,5 +21,8 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void onExitButtonClicked();
 };
 #endif // MAINWINDOW_H
