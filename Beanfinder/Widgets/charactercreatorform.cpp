@@ -11,19 +11,14 @@ CharacterCreatorForm::CharacterCreatorForm(QWidget *parent) :
     initMaps();
     connect(ui->backButton, &QPushButton::clicked, this, &CharacterCreatorForm::onBackButtonClicked);
 
+    onFactionClicked( Faction::Alliance );
+
     connect(ui->allianceButton, &QPushButton::clicked, [=] {
         emit onFactionClicked( Faction::Alliance );
     });
     connect(ui->hordeButton, &QPushButton::clicked, [=] {
         emit onFactionClicked( Faction::Horde );
     });
-    ui->raceList->setFlow( QListView::LeftToRight );
-    ui->raceList->setSpacing(2);
-    updateRaceList( Faction::Alliance );
-
-    ui->classList->setFlow( QListView::LeftToRight );
-    ui->classList->setSpacing(2);
-    ui->classList->setViewMode(QListView::IconMode);
 }
 
 CharacterCreatorForm::~CharacterCreatorForm()
@@ -81,22 +76,16 @@ void CharacterCreatorForm::onBackButtonClicked()
 
 void CharacterCreatorForm::updateRaceList( Faction aFaction )
 {
-    ui->raceList->clear();
     int startRace{ aFaction == Faction::Alliance ? static_cast<int>(Race::Human) : static_cast<int>(Race::Orc) };
-    for(int i{ startRace }; i < RACE_COUNT + startRace; i++)
+    for(int i{ 0 }; i < RACE_COUNT; i++)
     {
-        auto listItem{ new QListWidgetItem() };
-        auto button{ new QPushButton(this) };
-        listItem->setSizeHint(buttonSizeHint());
-        button->setObjectName(QString("raceButton%1").arg(i));
-        button->setText(raceMap.find(static_cast<Race>(i))->second);
-        ui->raceList->addItem(listItem);
-        ui->raceList->setItemWidget(listItem, button);
-        button->show();
-        /*
-        connect(button, &QPushButton::clicked, [=] {
-            emit onRaceClicked( static_cast<Race>(i) );
-        });*/
+        auto currentButton{ findChild<QPushButton*>(QString("race%1").arg(i)) };
+        currentButton->setText( raceMap.find( static_cast<Race>( i + startRace ) )->second );
+        currentButton->disconnect();
+
+        connect( currentButton, &QPushButton::clicked, [=] {
+            emit onRaceClicked( static_cast<Race>( i + startRace ) );
+        });
     }
 
     if( aFaction == Faction::Alliance )
@@ -111,28 +100,21 @@ void CharacterCreatorForm::updateRaceList( Faction aFaction )
 
 void CharacterCreatorForm::updateClassList( Race aRace )
 {
-    ui->classList->clear();
     std::vector<Class> availableClasses = getAvailableClasses( aRace );
     for(int i{ 0 }; i < CLASS_COUNT; i++)
     {
-        auto listItem{ new QListWidgetItem() };
-        auto button{ new QPushButton(this) };
-        listItem->setSizeHint(buttonSizeHint());
-        button->setObjectName(QString("classButton%1").arg(i));
-        button->setText(classMap.find(static_cast<Class>(i))->second);
-        ui->classList->addItem(listItem);
-        ui->classList->setItemWidget(listItem, button);
-        button->show();
+        auto currentButton{ findChild<QPushButton*>(QString("class%1").arg(i)) };
+        currentButton->setText( classMap.find( static_cast<Class>( i ) )->second );
+        currentButton->disconnect();
 
         if( std::find(availableClasses.begin(), availableClasses.end(), static_cast<Class>(i)) != availableClasses.end())
         {
-            button->setEnabled( true );
+            currentButton->setEnabled( true );
         }
         else
         {
-            button->setEnabled( false );
+            currentButton->setEnabled( false );
         }
-        printf("button dimensions %d x %d", button->height(), button->width());
     }
 }
 
