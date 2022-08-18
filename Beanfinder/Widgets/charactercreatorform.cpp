@@ -272,8 +272,8 @@ void CharacterCreatorForm::onDoneButtonClicked()
     // TODO: A helper function to condense the race / class translation would be nice.
     const auto characterName{ ui->characterName->displayText() };
 
-    auto db{ DatabaseManager() };
-    if( !db.addCharacter(characterName.toStdString(), raceMap.find(currentRace)->second.toStdString(), classMap.find(currentClass)->second.toStdString() ) )
+    auto db{ DatabaseManager::getInstance() };
+    if( !db->addCharacter(characterName.toStdString(), raceMap.find(currentRace)->second.toStdString(), classMap.find(currentClass)->second.toStdString() ) )
     {
         qDebug() << "Failed to add character to DB!";
     }

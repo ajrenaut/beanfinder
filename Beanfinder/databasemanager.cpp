@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QSqlQuery>
 
+static std::shared_ptr<DatabaseManager> sInstance;
+
 DatabaseManager::DatabaseManager()
 {
     mDatabase = QSqlDatabase::addDatabase("QSQLITE" , "CONNECTION NAME");
@@ -22,6 +24,15 @@ DatabaseManager::DatabaseManager()
             "class TEXT NOT NULL );"
         );
     query.exec();
+}
+
+std::shared_ptr<DatabaseManager> DatabaseManager::getInstance()
+{
+    if( sInstance == nullptr )
+    {
+        sInstance.reset( new DatabaseManager );
+    }
+    return sInstance;
 }
 
 bool DatabaseManager::addCharacter

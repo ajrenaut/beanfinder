@@ -75,16 +75,16 @@ void MainWindow::onExitButtonClicked()
 void MainWindow::onDeleteButtonClicked()
 {
     // TODO: Should more properly iterate through the QList.
-    auto db{ DatabaseManager() };
-    db.deleteCharacter( selectedCharacter->getName().toStdString() );
+    auto db{ DatabaseManager::getInstance() };
+    db->deleteCharacter( selectedCharacter->getName().toStdString() );
 
     refreshCharacterList();
 }
 
 void MainWindow::refreshCharacterList()
 {
-    auto db{ DatabaseManager() };
-    auto queryResults{ db.getCharacters() };
+    auto db{ DatabaseManager::getInstance() };
+    auto queryResults{ db->getCharacters() };
 
     ui->characterList->clear();
     int i{ 0 };

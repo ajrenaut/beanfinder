@@ -6,7 +6,7 @@
 class DatabaseManager
 {
 public:
-    DatabaseManager();
+    static std::shared_ptr<DatabaseManager> getInstance();
 
     bool addCharacter
         (
@@ -23,6 +23,8 @@ public:
     QSqlQuery getCharacters();
 
 private:
+    DatabaseManager();
+
     QSqlDatabase mDatabase;
 };
 
