@@ -25,6 +25,9 @@
    <property name="text">
     <string>Alliance</string>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="hordeButton">
    <property name="geometry">
@@ -37,6 +40,9 @@
    </property>
    <property name="text">
     <string>Horde</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="doneButton">
@@ -105,6 +111,9 @@
       <property name="text">
        <string>PushButton</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item>
@@ -117,6 +126,9 @@
       </property>
       <property name="text">
        <string>PushButton</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -131,6 +143,9 @@
       <property name="text">
        <string>PushButton</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item>
@@ -144,6 +159,9 @@
       <property name="text">
        <string>PushButton</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item>
@@ -156,6 +174,9 @@
       </property>
       <property name="text">
        <string>PushButton</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -182,6 +203,9 @@
       <property name="text">
        <string>PushButton</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="0" column="1">
@@ -194,6 +218,9 @@
       </property>
       <property name="text">
        <string>PushButton</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -208,6 +235,9 @@
       <property name="text">
        <string>PushButton</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="0" column="3">
@@ -220,6 +250,9 @@
       </property>
       <property name="text">
        <string>PushButton</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -234,6 +267,9 @@
       <property name="text">
        <string>PushButton</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="1" column="2">
@@ -246,6 +282,9 @@
       </property>
       <property name="text">
        <string>PushButton</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -260,6 +299,9 @@
       <property name="text">
        <string>PushButton</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="1" column="1">
@@ -272,6 +314,9 @@
       </property>
       <property name="text">
        <string>PushButton</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -286,6 +331,12 @@
       <property name="text">
        <string>PushButton</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
      </widget>
     </item>
     <item row="1" column="0">
@@ -298,6 +349,9 @@
       </property>
       <property name="text">
        <string>PushButton</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
      </widget>
     </item>

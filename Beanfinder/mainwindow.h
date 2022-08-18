@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 
+#include "Widgets\characterlistitem.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -22,7 +24,13 @@ public slots:
 private:
     Ui::MainWindow *ui;
 
+    CharacterListItem* selectedCharacter;
+
 private slots:
     void onExitButtonClicked();
+
+    void onDeleteButtonClicked();
+
+    void refreshCharacterList();
 };
 #endif // MAINWINDOW_H

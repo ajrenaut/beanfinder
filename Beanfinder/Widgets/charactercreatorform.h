@@ -32,7 +32,9 @@ public:
         Undead,
         Tauren,
         Troll,
-        BloodElf
+        BloodElf,
+
+        INVALID_RACE
     };
 
     // The classes are ordered as they appear in the in-game
@@ -48,7 +50,9 @@ public:
         Shaman,
         Mage,
         Warlock,
-        Druid
+        Druid,
+
+        INVALID_CLASS
     };
 
     // Functions
@@ -57,12 +61,17 @@ public:
 
     QSize buttonSizeHint() const;
 
+signals:
+    void characterAdded();
+
 public slots:
     void onCreateCharacterClicked();
 
-    void onFactionClicked( Faction aFaction );
+    void onFactionClicked( CharacterCreatorForm::Faction aFaction );
 
-    void onRaceClicked( Race aRace );
+    void onRaceClicked( CharacterCreatorForm::Race aRace );
+
+    void onClassClicked( CharacterCreatorForm::Class aClass );
 
 private:
     // Types
@@ -77,7 +86,7 @@ private:
 
     void updateClassList( Race aRace );
 
-    std::vector<CharacterCreatorForm::Class> getAvailableClasses( Race aRace );
+    std::vector<Class> getAvailableClasses( Race aRace );
 
     // Variables
     Ui::CharacterCreatorForm *ui;
@@ -86,8 +95,15 @@ private:
 
     std::map<Class, QString> classMap;
 
+    Race currentRace;
+
+    Class currentClass;
+
+
 private slots:
     void onBackButtonClicked();
+
+    void onDoneButtonClicked();
 };
 
 #endif // CHARACTERCREATORFORM_H

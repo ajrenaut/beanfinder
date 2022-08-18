@@ -3,7 +3,10 @@
 #include "Widgets\characterlistitem.h"
 #include "Widgets\charactercreatorform.h"
 
+#include "databasemanager.h"
+
 #include <QObject>
+#include <QSqlQuery>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,32 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     const int logoHeight{ ui->logo->height() };
     ui->logo->setPixmap( logoMap.scaled( logoWidth, logoHeight, Qt::KeepAspectRatio ) );
 
-    auto item1{ new QListWidgetItem() };
-    auto widget1{ new CharacterListItem(ui->characterList) };
-    widget1->setName(QString("Beancounter"));
-    widget1->setRaceClass(QString("Blood Elf Paladin"));
-    widget1->onFocusChanged( false );
-    item1->setSizeHint(widget1->sizeHint());
-    ui->characterList->addItem(item1);
-    ui->characterList->setItemWidget(item1, widget1);
-
-    auto item2{ new QListWidgetItem() };
-    auto widget2{ new CharacterListItem(ui->characterList) };
-    widget2->setName(QString("Beanpruner"));
-    widget2->setRaceClass(QString("Tauren Druid"));
-    widget2->onFocusChanged( false );
-    item2->setSizeHint(widget2->sizeHint());
-    ui->characterList->addItem(item2);
-    ui->characterList->setItemWidget(item2, widget2);
-
-    auto item3{ new QListWidgetItem() };
-    auto widget3{ new CharacterListItem(ui->characterList) };
-    widget3->onFocusChanged( false );
-    widget3->setName(QString("Zugmanuts"));
-    widget3->setRaceClass(QString("Orc Warrior"));
-    item3->setSizeHint(widget3->sizeHint());
-    ui->characterList->addItem(item3);
-    ui->characterList->setItemWidget(item3, widget3);
+    refreshCharacterList();
 
     auto characterCreatorWidget{ new CharacterCreatorForm( this ) };
     characterCreatorWidget->setObjectName("characterCreatorWidget");
@@ -62,7 +40,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->createCharacterButton, &QPushButton::clicked,
             characterCreatorWidget, &CharacterCreatorForm::onCreateCharacterClicked);
 
+    connect(ui->deleteButton, &QPushButton::clicked,
+            this, &MainWindow::onDeleteButtonClicked );
+
     connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::onExitButtonClicked);
+
+    connect( characterCreatorWidget, &CharacterCreatorForm::characterAdded, this, &MainWindow::refreshCharacterList );
 }
 
 MainWindow::~MainWindow()
@@ -79,11 +62,43 @@ void MainWindow::onCharacterListSelectionChanged(QListWidgetItem* current, QList
     }
     if( current && qobject_cast<CharacterListItem*>(ui->characterList->itemWidget(current)) )
     {
-        qobject_cast<CharacterListItem*>(ui->characterList->itemWidget(current))->onFocusChanged( true );
+        selectedCharacter = qobject_cast<CharacterListItem*>( ui->characterList->itemWidget(current) );
+        selectedCharacter->onFocusChanged( true );
     }
 }
 
 void MainWindow::onExitButtonClicked()
 {
     qApp->quit();
+}
+
+void MainWindow::onDeleteButtonClicked()
+{
+    // TODO: Should more properly iterate through the QList.
+    auto db{ DatabaseManager() };
+    db.deleteCharacter( selectedCharacter->getName().toStdString() );
+
+    refreshCharacterList();
+}
+
+void MainWindow::refreshCharacterList()
+{
+    auto db{ DatabaseManager() };
+    auto queryResults{ db.getCharacters() };
+
+    ui->characterList->clear();
+    int i{ 0 };
+    while( queryResults.next() )
+    {
+        auto listItem{ new QListWidgetItem() };
+        auto characterWidget{ new CharacterListItem( ui->characterList ) };
+        characterWidget->setName( queryResults.value( 0 ).toString() );
+        characterWidget->setRaceClass( queryResults.value( 1 ).toString() + " " + queryResults.value( 2 ).toString() );
+        characterWidget->onFocusChanged( false );
+        characterWidget->setObjectName( QString( "character%1" ).arg( i ) );
+        listItem->setSizeHint( characterWidget->sizeHint() );
+        ui->characterList->addItem( listItem );
+        ui->characterList->setItemWidget( listItem, characterWidget );
+        i++;
+    }
 }

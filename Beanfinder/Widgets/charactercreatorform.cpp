@@ -1,17 +1,21 @@
 #include "charactercreatorform.h"
 #include "ui_charactercreatorform.h"
 
+#include <QDebug>
+
+#include "databasemanager.h"
+
 using namespace std;
 
 CharacterCreatorForm::CharacterCreatorForm(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::CharacterCreatorForm)
+    ui(new Ui::CharacterCreatorForm),
+    currentRace{ Race::INVALID_RACE },
+    currentClass{ Class::INVALID_CLASS }
 {
     ui->setupUi(this);
     initMaps();
     connect(ui->backButton, &QPushButton::clicked, this, &CharacterCreatorForm::onBackButtonClicked);
-
-    onFactionClicked( Faction::Alliance );
 
     connect(ui->allianceButton, &QPushButton::clicked, [=] {
         emit onFactionClicked( Faction::Alliance );
@@ -19,6 +23,9 @@ CharacterCreatorForm::CharacterCreatorForm(QWidget *parent) :
     connect(ui->hordeButton, &QPushButton::clicked, [=] {
         emit onFactionClicked( Faction::Horde );
     });
+    ui->allianceButton->click();
+
+    connect(ui->doneButton, &QPushButton::clicked, this, &CharacterCreatorForm::onDoneButtonClicked);
 }
 
 CharacterCreatorForm::~CharacterCreatorForm()
@@ -81,8 +88,8 @@ void CharacterCreatorForm::updateRaceList( Faction aFaction )
     {
         auto currentButton{ findChild<QPushButton*>(QString("race%1").arg(i)) };
         currentButton->setText( raceMap.find( static_cast<Race>( i + startRace ) )->second );
-        currentButton->disconnect();
 
+        currentButton->disconnect();
         connect( currentButton, &QPushButton::clicked, [=] {
             emit onRaceClicked( static_cast<Race>( i + startRace ) );
         });
@@ -115,6 +122,12 @@ void CharacterCreatorForm::updateClassList( Race aRace )
         {
             currentButton->setEnabled( false );
         }
+
+        // TODO: There's no need to do this every time the class list is updated. Move this elsewhere.
+        currentButton->disconnect();
+        connect( currentButton, &QPushButton::clicked, [=] {
+            emit onClassClicked( static_cast<Class>( i ) );
+        });
     }
 }
 
@@ -202,6 +215,9 @@ std::vector<CharacterCreatorForm::Class> CharacterCreatorForm::getAvailableClass
             availableClasses.emplace_back( Class::Rogue );
             availableClasses.emplace_back( Class::Warlock );
             break;
+        default:
+            // Ignore all of our problems
+            break;
     }
 
     return availableClasses;
@@ -224,6 +240,8 @@ void CharacterCreatorForm::onFactionClicked( Faction aFaction )
 
 void CharacterCreatorForm::onRaceClicked( Race aRace )
 {
+    currentRace = aRace;
+
     updateClassList( aRace );
     for(int i{ 0 }; i < RACE_COUNT; i++)
     {
@@ -232,5 +250,35 @@ void CharacterCreatorForm::onRaceClicked( Race aRace )
         {
             currentButton->setChecked( false );
         }
+    }
+}
+
+void CharacterCreatorForm::onClassClicked( Class aClass )
+{
+    currentClass = aClass;
+
+    for(int i{ 0 }; i < CLASS_COUNT; i++)
+    {
+        auto currentButton{ findChild<QPushButton*>(QString("class%1").arg(i)) };
+        if( currentButton->text() != classMap.find( aClass )->second )
+        {
+            currentButton->setChecked( false );
+        }
+    }
+}
+
+void CharacterCreatorForm::onDoneButtonClicked()
+{
+    // TODO: A helper function to condense the race / class translation would be nice.
+    const auto characterName{ ui->characterName->displayText() };
+
+    auto db{ DatabaseManager() };
+    if( !db.addCharacter(characterName.toStdString(), raceMap.find(currentRace)->second.toStdString(), classMap.find(currentClass)->second.toStdString() ) )
+    {
+        qDebug() << "Failed to add character to DB!";
+    }
+    else
+    {
+        characterAdded();
     }
 }
