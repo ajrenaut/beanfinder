@@ -25,9 +25,15 @@ public:
 
     void onFocusChanged( const bool aIsFocused );
 
+signals:
+    void selectCharacterClicked( std::string aCharacterName );
+
 private:
 // Variables
     Ui::CharacterListItem *ui;
+
+private slots:
+    void onSelectCharacterClicked();
 
 };
 

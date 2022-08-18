@@ -18,6 +18,9 @@ public:
     explicit LoginScreen(QWidget *parent = nullptr);
     ~LoginScreen();
 
+signals:
+    void selectCharacterClicked( std::string aCharacterName );
+
 public slots:
     void onCharacterListSelectionChanged(QListWidgetItem* current, QListWidgetItem* previous);
 

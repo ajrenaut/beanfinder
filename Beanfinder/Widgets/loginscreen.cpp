@@ -14,7 +14,7 @@ LoginScreen::LoginScreen(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QPixmap logoMap("D:/Programming Projects/Beanfinder/Application/Beanfinder/assets/logo");
+    QPixmap logoMap( "..\\Beanfinder\\assets\\logo" );
     const int logoWidth{ ui->logo->width() };
     const int logoHeight{ ui->logo->height() };
     ui->logo->setPixmap( logoMap.scaled( logoWidth, logoHeight, Qt::KeepAspectRatio ) );
@@ -24,9 +24,9 @@ LoginScreen::LoginScreen(QWidget *parent) :
     refreshCharacterList();
 
     auto characterCreatorWidget{ new CharacterCreatorForm( this ) };
-    characterCreatorWidget->setObjectName("characterCreatorWidget");
+    characterCreatorWidget->setObjectName( "characterCreatorWidget" );
     characterCreatorWidget->setAutoFillBackground( true );
-    characterCreatorWidget->move(320, 110);
+    characterCreatorWidget->move( 320, 110 );
     characterCreatorWidget->hide();
 
     // Probably should connect this to the character creator widget instead of the main window.
@@ -91,6 +91,8 @@ void LoginScreen::refreshCharacterList()
         listItem->setSizeHint( characterWidget->sizeHint() );
         ui->characterList->addItem( listItem );
         ui->characterList->setItemWidget( listItem, characterWidget );
+        connect( characterWidget, &CharacterListItem::selectCharacterClicked, this, &LoginScreen::selectCharacterClicked );
+
         i++;
     }
 }

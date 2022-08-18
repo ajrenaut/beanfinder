@@ -7,6 +7,8 @@ CharacterListItem::CharacterListItem(QWidget *parent) :
     ui(new Ui::CharacterListItem)
 {
     ui->setupUi(this);
+
+    connect( ui->buttonLogin, &QPushButton::clicked, this, &CharacterListItem::onSelectCharacterClicked );
 }
 
 CharacterListItem::~CharacterListItem()
@@ -47,4 +49,10 @@ QSize CharacterListItem::minimumSizeHint() const
 void CharacterListItem::onFocusChanged( const bool aIsFocused )
 {
     ui->buttonLogin->setVisible( aIsFocused );
+}
+
+void CharacterListItem::onSelectCharacterClicked()
+{
+    auto charName{ this->getName().toStdString() };
+    emit selectCharacterClicked( charName );
 }
