@@ -21,12 +21,18 @@ set(PROJECT_SOURCES
         mainwindow.ui
         databasemanager.cpp
         databasemanager.h
-        Widgets/characterlistitem.ui
-        Widgets/characterlistitem.h
         Widgets/characterlistitem.cpp
-        Widgets/charactercreatorform.h
+        Widgets/characterlistitem.h
+        Widgets/characterlistitem.ui
         Widgets/charactercreatorform.cpp
+        Widgets/charactercreatorform.h
         Widgets/charactercreatorform.ui
+        Widgets/loginscreen.cpp
+        Widgets/loginscreen.h
+        Widgets/loginscreen.ui
+        Widgets/mainmenu.cpp
+        Widgets/mainmenu.h
+        Widgets/mainmenu.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
